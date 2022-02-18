@@ -1,26 +1,23 @@
 // Singly Linked List
 
-
-class Node{
-    constructor(value){
-        this.value = value
-        this.next = null
+class Node {
+    constructor(value) {
+        this.value = value;
+        this.next = null;
     }
 }
 
-
-
-class SLList{
-    constructor(){
-        this.head = null
+class SLList {
+    constructor() {
+        this.head = null;
     }
 
     addToFront(value) {
         // step #1 Make a new node
         var newNode = new Node(value);
-        
+
         // Check to see if there is a head
-        if(this.head == null) {
+        if (this.head == null) {
             this.head = newNode;
 
             return this;
@@ -31,18 +28,16 @@ class SLList{
         this.head = newNode;
 
         return this;
-
-
     }
 
     addToBack(value) {
-        if(this.head==null){
+        if (this.head == null) {
             return this.addToFront(value);
         }
         var newNode = new Node(value);
         var runner = this.head;
-        while(runner.next!=null){
-            runner=runner.next;
+        while (runner.next != null) {
+            runner = runner.next;
         }
         runner.next = newNode;
         return this;
@@ -52,152 +47,214 @@ class SLList{
         var newHead = this.head.next;
         var oldHead = this.head;
         this.head = newHead;
-        oldHead.next=null;
+        oldHead.next = null;
         return this;
     }
 
     removeFromBack() {
-        if(this.head.next==null){
+        if (this.head.next == null) {
             var oldHead = this.head;
             this.head = null;
             return oldHead.value;
         }
         var runner = this.head;
-        while(runner.next.next!=null){
-            runner=runner.next;
+        while (runner.next.next != null) {
+            runner = runner.next;
         }
         var oldTail = runner.next;
-        runner.next=null;
+        runner.next = null;
         return oldTail.value;
     }
 
-    contains(val){
+    contains(val) {
         var runner = this.head;
-        while(runner.next!=null){
-            if(runner.value==val){
+        while (runner.next != null) {
+            if (runner.value == val) {
                 return true;
             }
-            runner=runner.next;
+            runner = runner.next;
         }
-        if(runner.value==val){
+        if (runner.value == val) {
             return true;
         }
         return false;
     }
 
-    minToFront(){
+    minToFront() {
         //variable to hold lowest value node
         var lowNode = this.head;
 
         //while loop to find lowest value node
         var runner = this.head;
-        while(runner.next!=null){
+        while (runner.next != null) {
             //comparing runner node to lowest node
-            if(runner.value<lowNode.value){
+            if (runner.value < lowNode.value) {
                 lowNode = runner;
             }
-            runner=runner.next;
+            runner = runner.next;
         }
 
         //if the last node is the lowest, remove it from back
-        if(runner.value<lowNode.value){
+        if (runner.value < lowNode.value) {
             lowNode = runner;
             this.removeFromBack();
         }
         //if the first node is the lowest, remove it from front
-        else if(lowNode==this.head){
+        else if (lowNode == this.head) {
             this.removeFromFront();
         }
         //otherwise navigate back to lowest node and remove it from middle
-        else{
+        else {
             var runner2 = this.head;
-            while(runner2.next!=lowNode){
-                runner2=runner2.next;
+            while (runner2.next != lowNode) {
+                runner2 = runner2.next;
             }
             var after = runner2.next.next;
             runner2.next = after;
-            lowNode.next=null;
+            lowNode.next = null;
         }
 
         //add lowest node to front
-        console.log("LOWEST: "+lowNode.value);
+        console.log("LOWEST: " + lowNode.value);
         return this.addToFront(lowNode.value);
     }
 
-    maxToBack(){
+    maxToBack() {
         //variable to hold highest value node
         var highNode = this.head;
 
         //while loop to find highest value node
         var runner = this.head;
-        while(runner.next!=null){
-            if(runner.value>highNode.value){
+        while (runner.next != null) {
+            if (runner.value > highNode.value) {
                 highNode = runner;
             }
-            runner=runner.next;
+            runner = runner.next;
         }
 
         //if the last node is the highest, remove it from back
-        if(runner.value>highNode.value){
+        if (runner.value > highNode.value) {
             highNode = runner;
             this.removeFromBack();
         }
         //if the first node is the highest, remove it from front
-        else if(highNode==this.head){
+        else if (highNode == this.head) {
             this.removeFromFront();
         }
         //otherwise navigate back to highest node and remove it from middle
-        else{
+        else {
             var runner2 = this.head;
-            while(runner2.next!=highNode){
-                runner2=runner2.next;
+            while (runner2.next != highNode) {
+                runner2 = runner2.next;
             }
             var after = runner2.next.next;
             runner2.next = after;
-            highNode.next=null;
+            highNode.next = null;
         }
 
         //add highest node to back
-        console.log("HIGHEST: "+highNode.value);
+        console.log("HIGHEST: " + highNode.value);
         return this.addToBack(highNode.value);
     }
 
-   // print the singly linked list
+    // print the singly linked list
     printValues() {
         // step #0 [EDGE CASE]) handle a case where there is nothing in the list
-        if(this.head == null){
-            console.log("There's nothing in the list! Dummy!")
+        if (this.head == null) {
+            console.log("There's nothing in the list! Dummy!");
             // return 'this' to end function and allow chaining of methods
-            return this
+            return this;
         }
         //step #1) establish a runner to traverse through the list
         var runner = this.head;
 
         // NOTE: we can move runner all the way into null because our loop will exit as soon as runner hits null, avoiding any errors with printing
-        while(runner != null) {
+        while (runner != null) {
             // step #2) print the values at each iteration before moving the runner!
-            console.log(`The current value is: ${runner.value}`)
-            runner = runner.next
+            console.log(`The current value is: ${runner.value}`);
+            runner = runner.next;
         }
-        console.log("We have hit the end of the list!")
+        console.log("We have hit the end of the list!");
         // return 'this' to end function and allow chaining of methods
-        return this
+        return this;
+    }
+
+    placeValueAppend(value, target) {
+        // check if there actually is a list
+        if (this.head == null) {
+            return this;
+        }
+        var runner = this.head;
+        var runnerNext = this.head.next;
+        var nodeNumber = 0;
+        console.log(nodeNumber);
+
+        // cycle through until hit node
+        while (nodeNumber < target && runnerNext != null) {
+            runner = runner.next;
+            runnerNext = runner.next;
+            nodeNumber++;
+            console.log(nodeNumber);
+
+            // next node was empty
+            if (runner === null) {
+                return this;
+            }
+        }
+
+        var newN = new Node(value);
+        runner.next = newN;
+        newN.next = runnerNext;
+
+        return this;
+    }
+
+    placeValuePrepend(value, target) {
+        // check if there actually is a list
+        if (this.head == null) {
+            return this;
+        }
+        var runner = this.head;
+        var runnerNext = this.head.next;
+        var nodeNumber = 0;
+        console.log(nodeNumber);
+
+        // cycle through until hit node
+        while (nodeNumber < target && runnerNext != null) {
+            runner = runner.next;
+            runnerNext = runner.next;
+            nodeNumber++;
+            console.log(nodeNumber);
+
+            // next node was empty
+            if (runner === null) {
+                return this;
+            }
+        }
+
+        var newN = new Node(value);
+        runner.next = newN;
+        newN.next = runnerNext;
+
+        return this;
     }
 }
 
 const sll = new SLList();
 
-sll.addToFront(-3)
-sll.addToFront(2)
-sll.addToFront(-10)
-sll.addToFront(76)
-sll.addToFront(5)
-
-console.log("BEFORE:")
+console.log("-----------------");
+sll.addToFront(-3);
+sll.addToFront(2);
+sll.addToFront(-10);
+sll.addToFront(76);
+sll.addToFront(5);
 sll.printValues();
 
+console.log("-----------------");
 sll.minToFront();
 sll.maxToBack();
+sll.printValues();
 
-console.log("AFTER:")
+console.log("-----------------");
+sll.placeValueAppend(333333, 99);
 sll.printValues();
