@@ -14,18 +14,18 @@ class SLList {
 
     addToFront(value) {
         // step #1 Make a new node
-        var newNode = new Node(value);
+        var a = new Node(value);
 
         // Check to see if there is a head
         if (this.head == null) {
-            this.head = newNode;
+            this.head = a;
 
             return this;
         }
 
         // if there is a head
-        newNode.next = this.head;
-        this.head = newNode;
+        a.next = this.head;
+        this.head = a;
 
         return this;
     }
@@ -34,12 +34,12 @@ class SLList {
         if (this.head == null) {
             return this.addToFront(value);
         }
-        var newNode = new Node(value);
+        var a = new Node(value);
         var runner = this.head;
         while (runner.next != null) {
             runner = runner.next;
         }
-        runner.next = newNode;
+        runner.next = a;
         return this;
     }
 
@@ -181,7 +181,7 @@ class SLList {
 
     placeValueAppend(value, target) {
         // check if there actually is a list
-        if (this.head == null) {
+        if (this.head == null || target < 0) {
             return this;
         }
         var runner = this.head;
@@ -195,11 +195,10 @@ class SLList {
             runnerNext = runner.next;
             nodeNumber++;
             console.log(nodeNumber);
+        }
 
-            // next node was empty
-            if (runner === null) {
-                return this;
-            }
+        if (nodeNumber != target){
+            return this;
         }
 
         var newN = new Node(value);
@@ -211,28 +210,34 @@ class SLList {
 
     placeValuePrepend(value, target) {
         // check if there actually is a list
-        if (this.head == null) {
+        if (this.head == null || target < 0) {
             return this;
         }
         var runner = this.head;
         var runnerNext = this.head.next;
         var nodeNumber = 0;
+        var newN = new Node(value);
+
+        if (target === 0){
+            newN.next = this.head;
+            this.head = newN;
+        }
+
         console.log(nodeNumber);
 
         // cycle through until hit node
-        while (nodeNumber < target && runnerNext != null) {
+        while (nodeNumber + 1 < target && runnerNext != null) {
             runner = runner.next;
             runnerNext = runner.next;
             nodeNumber++;
             console.log(nodeNumber);
-
-            // next node was empty
-            if (runner === null) {
-                return this;
-            }
         }
 
-        var newN = new Node(value);
+        if (nodeNumber + 1 != target){
+            return this;
+        }
+
+
         runner.next = newN;
         newN.next = runnerNext;
 
@@ -243,18 +248,26 @@ class SLList {
 const sll = new SLList();
 
 console.log("-----------------");
-sll.addToFront(-3);
-sll.addToFront(2);
-sll.addToFront(-10);
-sll.addToFront(76);
+sll.addToFront(6);
 sll.addToFront(5);
+sll.addToFront(4);
+sll.addToFront(3);
+sll.addToFront(2);
+sll.addToFront(1);
+sll.addToFront(0);
+sll.printValues();
+
+// console.log("-----------------");
+// sll.minToFront();
+// sll.maxToBack();
+// sll.printValues();
+
+console.log("-----------------");
+console.log("APPEND");
+sll.placeValueAppend(333333, 4);
 sll.printValues();
 
 console.log("-----------------");
-sll.minToFront();
-sll.maxToBack();
-sll.printValues();
-
-console.log("-----------------");
-sll.placeValueAppend(333333, 99);
+console.log("PREPEND");
+sll.placeValuePrepend(78777777777777, 8);
 sll.printValues();
